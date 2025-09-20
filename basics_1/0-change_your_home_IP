@@ -1,16 +1,6 @@
 #!/usr/bin/env bash
-# Configure localhost and facebook.com IPs
+# configures a Ubuntu server such that localhost resolves to 127.0.0.2
+# and facebook.com resolves to 8.8.8.8.
 
-# Backup hosts file
-cp /etc/hosts /etc/hosts.bak
-
-# Replace or add localhost and facebook.com
-# Use a temporary file to avoid sed "Device or resource busy" error
-TMPFILE=$(mktemp)
-
-sed '/localhost/d;/facebook.com/d' /etc/hosts > "$TMPFILE"
-echo "127.0.0.2 localhost" >> "$TMPFILE"
-echo "8.8.8.8 facebook.com" >> "$TMPFILE"
-
-sudo cp "$TMPFILE" /etc/hosts
-rm "$TMPFILE"
+echo "127.0.0.2 localhost" | sudo tee /etc/hosts
+echo "8.8.8.8 facebook.com" | sudo tee -a /etc/hosts
